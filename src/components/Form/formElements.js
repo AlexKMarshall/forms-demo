@@ -11,9 +11,9 @@ function getLabelContent(labelText, required) {
 }
 
 function Input({ name, label, type = "text", id, required, ...rest }) {
-  const { formState, handleInputChange } = useForm();
+  const { formValues, handleInputChange } = useForm();
 
-  const value = formState[name] ?? "";
+  const value = formValues[name] ?? "";
 
   return (
     <div className="formField">
@@ -32,8 +32,8 @@ function Input({ name, label, type = "text", id, required, ...rest }) {
 }
 
 function Select({ name, label, id, children, required, ...rest }) {
-  const { formState, handleInputChange } = useForm();
-  const value = formState[name] ?? "";
+  const { formValues, handleInputChange } = useForm();
+  const value = formValues[name] ?? "";
 
   return (
     <div className="formField">
@@ -74,7 +74,7 @@ function useRadioGroup() {
   return context;
 }
 
-function RadioButton({ id, value, label }) {
+function RadioButton({ id, value, label, ...rest }) {
   const { name } = useRadioGroup();
   const { handleInputChange } = useForm();
 
@@ -86,6 +86,7 @@ function RadioButton({ id, value, label }) {
         id={id}
         value={value}
         onChange={handleInputChange}
+        {...rest}
       />
       <label htmlFor={id}>{label}</label>
     </div>

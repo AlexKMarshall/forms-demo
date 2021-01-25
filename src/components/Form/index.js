@@ -20,7 +20,7 @@ function Form({ onSubmit, ...rest }) {
   }
 
   const providerValue = {
-    formState: formValues,
+    formValues,
     handleInputChange,
   };
 

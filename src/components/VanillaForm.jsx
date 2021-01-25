@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Form, Input, Select, RadioGroup, RadioButton } from "./Form";
+import { Form, Input, Select, RadioGroup, RadioButton, useForm } from "./Form";
 
 function VanillaForm() {
   function handleSumbit(formValues) {
@@ -9,6 +9,16 @@ function VanillaForm() {
 
   return (
     <Form className="stack" onSubmit={handleSumbit}>
+      <FormDetails />
+    </Form>
+  );
+}
+
+function FormDetails() {
+  const { formValues } = useForm();
+
+  return (
+    <>
       <Input name="name" label="Name" required />
       <Input name="nickname" label="Nickname" />
       <Input name="email" label="Email" required />
@@ -24,16 +34,17 @@ function VanillaForm() {
       <RadioGroup name="hasPet">
         <p>Do you have a pet?</p>
         <RadioButton id="hasPetYes" value="yes" label="I do" />
-        <RadioButton id="hasPetNo" value="no" label="I don't" />
+        <RadioButton id="hasPetNo" value="no" label="I don't" defaultChecked />
       </RadioGroup>
-
-      <Select name="petType" label="Type of pet:">
-        <option value="">Please select</option>
-        <option value="cat">Cat</option>
-        <option value="dog">Dog</option>
-      </Select>
+      {formValues.hasPet === "yes" ? (
+        <Select name="petType" label="Type of pet:">
+          <option value="">Please select</option>
+          <option value="cat">Cat</option>
+          <option value="dog">Dog</option>
+        </Select>
+      ) : null}
       <button type="submit">Submit</button>
-    </Form>
+    </>
   );
 }
 
