@@ -1,38 +1,49 @@
 import React from "react";
 import { useForm } from ".";
 
-function Input({ name, label, type = "text", id, ...rest }) {
+function getLabelContent(labelText, required) {
+  return (
+    <>
+      {labelText}
+      {required ? <span className="required">*</span> : null}
+    </>
+  );
+}
+
+function Input({ name, label, type = "text", id, required, ...rest }) {
   const { formState, handleInputChange } = useForm();
 
   const value = formState[name] ?? "";
 
   return (
     <div className="formField">
-      <label htmlFor={id ?? name}>{label}</label>
+      <label htmlFor={id ?? name}>{getLabelContent(label, required)}</label>
       <input
         id={id ?? name}
         name={name}
         type={type}
         value={value}
         onChange={handleInputChange}
+        required={required}
         {...rest}
       />
     </div>
   );
 }
 
-function Select({ name, label, id, children, ...rest }) {
+function Select({ name, label, id, children, required, ...rest }) {
   const { formState, handleInputChange } = useForm();
   const value = formState[name] ?? "";
 
   return (
     <div className="formField">
-      <label htmlFor={id ?? name}>{label}</label>
+      <label htmlFor={id ?? name}>{getLabelContent(label, required)}</label>
       <select
         name={name}
         id={id ?? name}
         value={value}
         onChange={handleInputChange}
+        required={required}
         {...rest}
       >
         {children}

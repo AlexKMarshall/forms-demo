@@ -9,10 +9,10 @@ function VanillaForm() {
 
   return (
     <Form className="stack" onSubmit={handleSumbit}>
-      <Input name="name" label="Name:" />
-      <Input name="nickname" label="Nickname:" />
-      <Input name="email" label="Email:" />
-      <Select name="size" label="Size:">
+      <Input name="name" label="Name" required />
+      <Input name="nickname" label="Nickname" />
+      <Input name="email" label="Email" required />
+      <Select name="size" label="Size">
         <option value="" disabled>
           Please select
         </option>
@@ -20,7 +20,7 @@ function VanillaForm() {
         <option value="medium">Medium</option>
         <option value="large">Large</option>
       </Select>
-      <Input name="country" label="Country:" />
+      <Input name="country" label="Country" />
       <RadioGroup name="hasPet">
         <p>Do you have a pet?</p>
         <RadioButton id="hasPetYes" value="yes" label="I do" />
