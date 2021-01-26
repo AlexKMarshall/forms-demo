@@ -11,7 +11,14 @@ function getLabelContent(labelText, required) {
 }
 
 function Input({ name, label, type = "text", id, required, ...rest }) {
-  const { formValues, handleInputChange } = useForm();
+  const { formValues, handleInputChange: formHandleChange } = useForm();
+  const inputRef = React.useRef();
+
+  const hasError = !inputRef.current?.validity.valid;
+
+  function handleInputChange(e) {
+    formHandleChange(e);
+  }
 
   const value = formValues[name] ?? "";
 
@@ -25,8 +32,10 @@ function Input({ name, label, type = "text", id, required, ...rest }) {
         value={value}
         onChange={handleInputChange}
         required={required}
+        ref={inputRef}
         {...rest}
       />
+      {hasError ? <div className="field-error">There is an error</div> : null}
     </div>
   );
 }
@@ -34,6 +43,9 @@ function Input({ name, label, type = "text", id, required, ...rest }) {
 function Select({ name, label, id, children, required, ...rest }) {
   const { formValues, handleInputChange } = useForm();
   const value = formValues[name] ?? "";
+  const selectRef = React.useRef();
+
+  const hasError = !selectRef.current?.validity.valid;
 
   return (
     <div className="formField">
@@ -44,10 +56,12 @@ function Select({ name, label, id, children, required, ...rest }) {
         value={value}
         onChange={handleInputChange}
         required={required}
+        ref={selectRef}
         {...rest}
       >
         {children}
       </select>
+      {hasError ? <div className="field-error">There is an error</div> : null}
     </div>
   );
 }
